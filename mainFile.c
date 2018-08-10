@@ -37,6 +37,7 @@
  int player = 0;
  char userName[20];
  int user = 0;
+ int total_moves = 0;
  int choises_done[10];
  int check_Cell(int);
  int check_Cell_Computer(int);
@@ -46,6 +47,9 @@
  int computer_win();
  int check_game_out();
  int game_out();
+ int check_row(int);
+ int check_column(int);
+ int check_diagonals();
 /*#define greet(){\
         printf("\t\t\tTIC TAC TOE GAME\033[0m");\
 		printf("\t\033[0;34m\n\n\n\t....................................................\n");\
@@ -54,7 +58,6 @@
 		printf("\t....................................................\033[0m\n\n\n\n\n\n\n\n\n");\
 		printf("Press any key to continue......");\
 	       }*/
-
  //--------------------------------------------------------
  int main() {
    for(int i=0;i<9;i++)
@@ -135,6 +138,7 @@
                 printf("User Input:");
                 scanf("%d",&cell_choise);
                 User_Play_board(cell_choise);
+                check_Win_orGameOut();
                 user++;
                 //goto computer;
             } else if(cell_choise >9){
@@ -320,14 +324,17 @@
  	  if((cell_choise == 1 || cell_choise == 2 || cell_choise == 3)){
  		   board[0][cell_choise-1] = 'O';
        choises_done[cell_choise-1] = 1;
+       total_moves++;
  	   }
  	   if((cell_choise == 4 || cell_choise == 5 || cell_choise == 6)){
  		    board[1][cell_choise-4] = 'O';
         choises_done[cell_choise-1] = 1;
+        total_moves++;
  	   }
  	   if(cell_choise == 7 || cell_choise == 8 || cell_choise == 9){
  		    board[2][cell_choise-7] = 'O';
         choises_done[cell_choise-1] = 1;
+        total_moves++;
  	   }
  	   else{
 
@@ -373,17 +380,24 @@
      if((randomnumber == 0 || randomnumber == 1 || randomnumber == 2)){
       board[0][randomnumber] = 'X';
       choises_done[randomnumber] = 1;
+      total_moves++;
     }
     if((randomnumber == 3 || randomnumber == 4 || randomnumber == 5)){
        board[1][randomnumber-3] = 'X';
        choises_done[randomnumber] = 1;
+       total_moves++;
     }
     if(randomnumber == 6 || randomnumber == 7 || randomnumber == 8){
        board[2][randomnumber-6] = 'X';
        choises_done[randomnumber] = 1;
+       total_moves++;
     }
    }else {
-     goto random;
+     if(total_moves<9){
+       goto random;
+     }else{
+       game_out();
+     }
    }
     /*return 0;
    if(board[0][1] == 'O' && board[0][1]!= 'O' && board[0][2]!= 'O'){
@@ -463,6 +477,7 @@ int  print_Board(){
   printf("| %c  |  %c  | %c  |\n",board[2][0],board[2][1], board[2][2]);
   printf("-----------------\n\n\n");
 }
+//--------------------------------------------------------
 int check_Win_orGameOut(){
 
   if(check_win(1)){
@@ -477,7 +492,110 @@ int check_Win_orGameOut(){
   else
   return 0;
 }
-int check_win(){
-  if(board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != ' ')
-        return(true);
+//--------------------------------------------------------
+int check_win(int player){
+  if(player == 1){ //user
+    if(check_row(1)){
+      return 1;
+    }else if(check_column(1)){
+      return 1;
+    }else if(check_diagonals(1)){
+      return 1;
+    }
+  }
+  if(player == 0){ //Computer
+    if(check_row(0)){
+      return 1;
+    }else if(check_column(0)){
+      return 1;
+    }else if(check_diagonals(0)){
+      return 1;
+    }
+    /*if(board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != ' ')
+        return(1);
+    */
+  }
+  return 0;
 }
+//--------------------------------------------------------
+int user_win(){
+
+  clear();
+  printf("User Won.");
+
+}
+//--------------------------------------------------------
+int computer_win(){
+
+  clear();
+  printf("Computer won.");
+
+}
+//--------------------------------------------------------
+int check_game_out(){
+  return 0;
+}
+//--------------------------------------------------------
+int game_out(){
+  clear();
+  printf("Game Out");
+}
+//--------------------------------------------------------
+int check_row(int user){
+  if(user == 1){
+    if(board[0][1] == board[0][1] == board[0][2] == 'O')
+      return 1;
+    if(board[1][0] == board[1][1] == board[1][2] == 'O')
+      return 1;
+    if(board[2][0] == board[2][1] == board[2][2] == 'O')
+      return 1;
+  }
+  if(user == 0){
+    if(board[0][1] == board[0][1] == board[0][2] == 'X')
+      return 1;
+    if(board[1][0] == board[1][1] == board[1][2] == 'X')
+      return 1;
+    if(board[2][0] == board[2][1] == board[2][2] == 'X')
+      return 1;
+  }
+  return 0;
+}
+//--------------------------------------------------------
+int check_column(int user){
+  if(user == 1){
+    if(board[0][0] == board[1][0] == board[2][0] == 'O')
+      return 1;
+    if(board[0][1] == board[1][1] == board[2][1] == 'O')
+      return 1;
+    if(board[0][2] == board[1][2] == board[2][2] == 'O')
+      return 1;
+  }
+  if(user == 0){
+    if(board[0][0] == board[1][0] == board[2][0] == 'X')
+      return 1;
+    if(board[0][1] == board[1][1] == board[2][1] == 'X')
+      return 1;
+    if(board[0][2] == board[1][2] == board[2][2] == 'X')
+      return 1;
+  }
+}
+//--------------------------------------------------------
+int check_diagonals(int user){
+  if(user == 1){
+    if(board[0][0] == board[1][1] == board[2][2] == 'O'){
+      return 1;
+    }
+    if(board[0][2] == board[1][1] == board[2][0] == 'O'){
+      return 1;
+    }
+  }
+  if(user == 0){
+    if(board[0][0] == board[1][1] == board[2][2] == 'X'){
+      return 1;
+    }
+    if(board[0][2] == board[1][1] == board[2][0] == 'X'){
+      return 1;
+    }
+  }
+}
+//--------------------------------------------------------
