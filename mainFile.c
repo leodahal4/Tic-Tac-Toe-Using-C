@@ -33,6 +33,19 @@
  int bye_bye();
  //void ask_User_Name();
  void greet();
+ char board[10][10];
+ int player = 0;
+ char userName[20];
+ int user = 0;
+ int choises_done[10];
+ int check_Cell(int);
+ int check_Cell_Computer(int);
+ int check_Win_orGameOut();
+ int check_win(int);
+ int user_win();
+ int computer_win();
+ int check_game_out();
+ int game_out();
 /*#define greet(){\
         printf("\t\t\tTIC TAC TOE GAME\033[0m");\
 		printf("\t\033[0;34m\n\n\n\t....................................................\n");\
@@ -41,12 +54,7 @@
 		printf("\t....................................................\033[0m\n\n\n\n\n\n\n\n\n");\
 		printf("Press any key to continue......");\
 	       }*/
-char board[10][10];
-int player = 0;
-char userName[20];
-int user = 0;
-int choises_done[10];
-int check_Cell(int);
+
  //--------------------------------------------------------
  int main() {
    for(int i=0;i<9;i++)
@@ -120,14 +128,15 @@ int check_Cell(int);
             if(user == 1){
                 computer:
                 computerPlayes();
+                check_Win_orGameOut();
                 user--;
             }
-            if(cell_choise == 1|| cell_choise == 2 || cell_choise == 3 || cell_choise == 4 || cell_choise == 5 || cell_choise == 6 || cell_choise == 7 || cell_choise == 8 || cell_choise == 9){
+            if(user == 0){
                 printf("User Input:");
                 scanf("%d",&cell_choise);
                 User_Play_board(cell_choise);
                 user++;
-                goto computer;
+                //goto computer;
             } else if(cell_choise >9){
                 cell_choise = 0;
                 goto loop;
@@ -307,7 +316,7 @@ int check_Cell(int);
  //--------------------------------------------------------
  int User_Play_board(int cell_choise){
 
-  if(check_Cell(cell_choise)){
+  if(check_Cell_Computer(cell_choise)){
  	  if((cell_choise == 1 || cell_choise == 2 || cell_choise == 3)){
  		   board[0][cell_choise-1] = 'O';
        choises_done[cell_choise-1] = 1;
@@ -354,10 +363,33 @@ int check_Cell(int);
  int computerPlayes(){
    //AI KEPT HERE
    printf("Hahahhahaha\n\n");
-   if(check_Cell(5)){
-     choises_done[4] = 1;
-     board[1][1] = 'X';
+   int moves = 8;
+   int randomnumber;
+   random:
+   randomnumber = rand() % (moves+1-0)+0;
+
+   if(check_Cell(randomnumber)){
+     printf("%d",randomnumber);
+     if((randomnumber == 0 || randomnumber == 1 || randomnumber == 2)){
+      board[0][randomnumber] = 'X';
+      choises_done[randomnumber] = 1;
+    }
+    if((randomnumber == 3 || randomnumber == 4 || randomnumber == 5)){
+       board[1][randomnumber-3] = 'X';
+       choises_done[randomnumber] = 1;
+    }
+    if(randomnumber == 6 || randomnumber == 7 || randomnumber == 8){
+       board[2][randomnumber-6] = 'X';
+       choises_done[randomnumber] = 1;
+    }
+   }else {
+     goto random;
    }
+    /*return 0;
+   if(board[0][1] == 'O' && board[0][1]!= 'O' && board[0][2]!= 'O'){
+     choises_done[2] = 1;
+     board[0][1] = 'X';
+   }*/
    print_Board();
   return 0;
  }
@@ -397,7 +429,7 @@ int bye_bye(){
     return 0;
 }
 //--------------------------------------------------------
-int check_Cell(int cell){
+int check_Cell_Computer(int cell){
 
   if(choises_done[cell-1] == 0){
 
@@ -408,6 +440,19 @@ int check_Cell(int cell){
   }
 
 }
+//--------------------------------------------------------
+int check_Cell(int cell){
+
+  if(choises_done[cell] == 0){
+
+    return 1;
+
+  }else{
+    return 0;
+  }
+
+}
+//--------------------------------------------------------
 int  print_Board(){
   printf(nextLines);
   printf("_________________\n");
@@ -417,4 +462,22 @@ int  print_Board(){
   printf("|---------------|\n");
   printf("| %c  |  %c  | %c  |\n",board[2][0],board[2][1], board[2][2]);
   printf("-----------------\n\n\n");
+}
+int check_Win_orGameOut(){
+
+  if(check_win(1)){
+    user_win();
+  }
+  else if(check_win(0)){
+    computer_win();
+  }
+  else if(check_game_out()){
+    game_out();
+  }
+  else
+  return 0;
+}
+int check_win(){
+  if(board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != ' ')
+        return(true);
 }
