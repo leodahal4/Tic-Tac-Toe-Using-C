@@ -1,5 +1,5 @@
 # Tic-Tac-Toe-Using-C
-This is a simple tic tac toe game using C. Hope you will like it.
+This is a simple tic tac toe game using C. Hope you will like it. 
 
 Best recomendation is to use Code-Blocks for running this source code or .c file. 
 
