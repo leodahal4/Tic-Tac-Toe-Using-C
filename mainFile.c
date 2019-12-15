@@ -6,50 +6,50 @@
 ** |_ _ _ _  |_ _ _ _     |_ _ _| Dahal
 */
 #include<stdio.h>
- #include<stdlib.h>
- #define mausam 1
- #define RED "\033[0;31m"
- #define RESET "\033[0m"
- #define GREEN "\033[0;32m"
- #define YELLOW "\033[1;33m"
- #define BLUE "\033[0;34m"
- #define CYAN "\033[0;36m"
- #define MAGNETA "\033[0;35m"
- #define nextLine "\n"
- #define nextLines "\n\n"
- #define COMPUTERMOVE "X"
- #define USERMOVE "O"
- #define RETURN_KEY 10
- int game();
- int clear();
- int whoPlaysFirst();
- int notice(int);
- int quit_message();
- int print_Theme_board();
- int User_Play_board(int);
- int computerPlayes();
- int set_board();
- int colors(char[]);
- int bye_bye();
- //void ask_User_Name();
- void greet();
- char board[10][10];
- int player = 0;
- char userName[20];
- int user = 0;
- int total_moves = 0;
- int choises_done[10];
- int check_Cell(int);
- int check_Cell_Computer(int);
- int check_Win_orGameOut();
- int check_win(int);
- int user_win();
- int computer_win();
- int check_game_out();
- int game_out();
- int check_row(int);
- int check_column(int);
- int check_diagonals();
+#include<stdlib.h>
+#define mausam 1
+#define RED "\033[0;31m"
+#define RESET "\033[0m"
+#define GREEN "\033[0;32m"
+#define YELLOW "\033[1;33m"
+#define BLUE "\033[0;34m"
+#define CYAN "\033[0;36m"
+#define MAGNETA "\033[0;35m"
+#define nextLine "\n"
+#define nextLines "\n\n"
+#define COMPUTERMOVE "X"
+#define USERMOVE "O"
+#define RETURN_KEY 10
+int game();
+int clear();
+int whoPlaysFirst();
+int notice(int);
+int quit_message();
+int print_Theme_board();
+int User_Play_board(int);
+int computerPlayes();
+int set_board();
+int colors(char[]);
+int bye_bye();
+//void ask_User_Name();
+void greet();
+char board[10][10];
+int player = 0;
+char userName[20];
+int user = 0;
+int total_moves = 0;
+int choises_done[10];
+int check_Cell(int);
+int check_Cell_Computer(int);
+int check_Win_orGameOut();
+int check_win(int);
+int user_win();
+int computer_win();
+int check_game_out();
+int game_out();
+int check_row(int);
+int check_column(int);
+int check_diagonals();
 /*#define greet(){\
         printf("\t\t\tTIC TAC TOE GAME\033[0m");\
 		printf("\t\033[0;34m\n\n\n\t....................................................\n");\
@@ -59,13 +59,13 @@
 		printf("Press any key to continue......");\
 	       }*/
  //--------------------------------------------------------
- int main() {
-   for(int i=0;i<9;i++)
-    choises_done[i] = 0;
+int main() {
+    for(int i=0;i<9;i++)
+        choises_done[i] = 0;
  	game();
    return 0;
 
- }
+}
  //--------------------------------------------------------
  /*void greet(){
     colors("red");
