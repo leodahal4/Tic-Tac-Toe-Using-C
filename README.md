@@ -14,6 +14,9 @@ If you will use TurboC/C++
 Prefer commenting line no. 168 to line no. 175.
 And uncomment line no.171 to line no. 181
 
+
+ > This project is still under development, #Stay_Tuned
+
 /* DESIGNED By
 **            _ _ _ _      _ _ _
 ** |         |            |     |
