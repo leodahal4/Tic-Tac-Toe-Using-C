@@ -7,6 +7,7 @@
 */
 #include<stdio.h>
 #include<stdlib.h>
+#include "string.h"
 #define mausam 1
 #define RED "\033[0;31m"
 #define RESET "\033[0m"
@@ -50,15 +51,6 @@ int game_out();
 int check_row(int);
 int check_column(int);
 int check_diagonals();
-/*#define greet(){\
-        printf("\t\t\tTIC TAC TOE GAME\033[0m");\
-		printf("\t\033[0;34m\n\n\n\t....................................................\n");\
-		printf("\t.--------------------Hello!------------------------.\n");\
-		printf("\t.----------You are Wellcome to this game.----------.\n");\
-		printf("\t....................................................\033[0m\n\n\n\n\n\n\n\n\n");\
-		printf("Press any key to continue......");\
-	       }*/
- //--------------------------------------------------------
 int main() {
     for(int i=0;i<9;i++)
         choises_done[i] = 0;
@@ -66,20 +58,8 @@ int main() {
    return 0;
 
 }
- //--------------------------------------------------------
- /*void greet(){
-    colors("red");
-    printf("\t\t\tTIC TAC TOE GAME");
-    colors("blue");
-    printf("\t\n\n\n\t....................................................\n");
-    printf("\t.--------------------Hello!------------------------.\n");
-    printf("\t.----------You are Wellcome to this game.----------.\n");
-    printf("\t....................................................\n\n\n\n\n\n\n\n\n");
-    colors("reset");
-    printf("Press any key to continue......");
-    getchar();
- }*/
- void greet(){
+
+void greet(){
     /*_
        |
      _ |
@@ -102,12 +82,6 @@ int main() {
     printf("\t|"RESET""BLUE"------------------------------------------"GREEN"Designed By LeO"BLUE"--"RESET""YELLOW"|\n");
     printf(YELLOW"\t - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - "RESET"\n");
     printf("\n\n");
-    /*printf("\t\t\t\t\t\t\t\t  _"nextLine);
-    printf("\t\t\t\t\t\t\t\t   |"nextLine);
-    printf("\t\t\t\t\t\t\t\t _ |"nextLine);
-    printf("\t\t\t\t\t\t\t\t\(_\),"nextLine);
-    printf("\t\t\t\t\t\t\t\t/|\\"nextLine);
-    printf("\t\t\t\t\t\t\t\t/|\\"nextLine);*/
     printf("\n\n\n\nPress any key to continue......");
     getchar();
  }
@@ -511,6 +485,10 @@ int check_win(int player){
     }else if(check_diagonals(0)){
       return 1;
     }
+    else{
+        printf(RED"\nNo one won.\n");
+    }
+
     /*if(board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != ' ')
         return(1);
     */
@@ -543,7 +521,7 @@ int game_out(){
 //--------------------------------------------------------
 int check_row(int user){
   if(user == 1){
-    if(board[0][1] == board[0][1] == board[0][2] == 'O')
+    if(board[0][0] == board[0][1] == board[0][2] == 'O' )
       return 1;
     if(board[1][0] == board[1][1] == board[1][2] == 'O')
       return 1;
@@ -551,31 +529,38 @@ int check_row(int user){
       return 1;
   }
   if(user == 0){
-    if(board[0][1] == board[0][1] == board[0][2] == 'X')
+    if(board[0][0] == board[0][1] == board[0][2] == 'X')
       return 1;
     if(board[1][0] == board[1][1] == board[1][2] == 'X')
       return 1;
     if(board[2][0] == board[2][1] == board[2][2] == 'X')
       return 1;
   }
+  printf("Return bigriyo ");
   return 0;
 }
 //--------------------------------------------------------
-int check_column(int user){
-  if(user == 1){
-    if(board[0][0] == board[1][0] == board[2][0] == 'O')
+int check(char boardLoc){
+    if(strcmp(&boardLoc, "O")){
+        return 1;
+    }
+}
+
+int check_column(int userId){
+  if(userId == 1){
+    if(board[0][0] == board[1][0] == board[2][0] && check(board[0][0]))
       return 1;
-    if(board[0][1] == board[1][1] == board[2][1] == 'O')
+    if(board[0][1] == board[1][1] == board[2][1])
       return 1;
-    if(board[0][2] == board[1][2] == board[2][2] == 'O')
+    if(board[0][2] == board[1][2] == board[2][2])
       return 1;
   }
-  if(user == 0){
-    if(board[0][0] == board[1][0] == board[2][0] == 'X')
+  if(userId == 0){
+    if(board[0][0] == board[1][0] == board[2][0])
       return 1;
-    if(board[0][1] == board[1][1] == board[2][1] == 'X')
+    if(board[0][1] == board[1][1] == board[2][1])
       return 1;
-    if(board[0][2] == board[1][2] == board[2][2] == 'X')
+    if(board[0][2] == board[1][2] == board[2][2])
       return 1;
   }
 }
@@ -599,3 +584,4 @@ int check_diagonals(int user){
   }
 }
 //--------------------------------------------------------
+
